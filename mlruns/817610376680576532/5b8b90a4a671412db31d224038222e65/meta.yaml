@@ -1,0 +1,14 @@
+artifact_uri: file:d:/ITI/ITI Courses/11) ML 1/project/Project GitHub 2/mlruns/817610376680576532/5b8b90a4a671412db31d224038222e65/artifacts
+end_time: 1771979348531
+entry_point_name: ''
+experiment_id: '817610376680576532'
+lifecycle_stage: active
+run_id: 5b8b90a4a671412db31d224038222e65
+run_name: KNN_n_ne3_metrminkowski_weiguniform
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1771979345044
+status: 3
+tags: []
+user_id: mazen
