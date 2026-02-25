@@ -1,0 +1,14 @@
+artifact_uri: file:d:/ITI/ITI Courses/11) ML 1/project/Project GitHub 2/mlruns/817610376680576532/a2b0c5a08290457d82d2668daf7b7f9a/artifacts
+end_time: 1771979028719
+entry_point_name: ''
+experiment_id: '817610376680576532'
+lifecycle_stage: active
+run_id: a2b0c5a08290457d82d2668daf7b7f9a
+run_name: LogisticRegression_C2.0_max_1000_n_jo-1_penal2_solvlbfgs
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1771979025284
+status: 3
+tags: []
+user_id: mazen
