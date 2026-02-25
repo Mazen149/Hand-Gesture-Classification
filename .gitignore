@@ -1,2 +1,6 @@
-models/
 __pycache__/
+# Ignore only logged models inside MLflow runs (large size)
+mlruns/*model*
+mlruns/model
+mlruns/*_model_*
+mlruns/**/models/
