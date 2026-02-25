@@ -1,0 +1,14 @@
+artifact_uri: file:d:/ITI/ITI Courses/11) ML 1/project/Project GitHub 2/mlruns/817610376680576532/fd537d33884f4839a34b64da16370d32/artifacts
+end_time: 1771979214772
+entry_point_name: ''
+experiment_id: '817610376680576532'
+lifecycle_stage: active
+run_id: fd537d33884f4839a34b64da16370d32
+run_name: SVM_C1.0_kernrbf_gammscale
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1771979211341
+status: 3
+tags: []
+user_id: mazen
