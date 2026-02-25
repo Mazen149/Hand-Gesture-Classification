@@ -1,0 +1,14 @@
+artifact_uri: file:d:/ITI/ITI Courses/11) ML 1/project/Project GitHub 2/mlruns/817610376680576532/87e1a7e6f7b2446a830c4dd7ef99a765/artifacts
+end_time: 1771976023410
+entry_point_name: ''
+experiment_id: '817610376680576532'
+lifecycle_stage: active
+run_id: 87e1a7e6f7b2446a830c4dd7ef99a765
+run_name: RandomForest_n_es300_max_30_n_jo-1_rand42
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1771976018710
+status: 3
+tags: []
+user_id: mazen
