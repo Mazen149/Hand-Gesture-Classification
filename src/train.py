@@ -8,6 +8,11 @@ from sklearn.metrics import confusion_matrix, ConfusionMatrixDisplay
 
 from .metrics import compute_metrics
 
+
+# Base project directory (one level above src/)
+BASE_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
+
+
 def _build_param_suffix(params: Dict[str, Any], max_items: int = 4) -> str:
     """
     Build a short, generic suffix from model parameters.
@@ -135,8 +140,11 @@ def train_and_evaluate_models(
 
         filename = f"{safe_name}_cm_test_{param_suffix}.png"
 
-        os.makedirs("figures", exist_ok=True)
-        filename = os.path.join("figures", filename)
+        FIGURES_DIR = os.path.join(BASE_DIR, "figures")
+        os.makedirs(FIGURES_DIR, exist_ok=True)
+
+        filename = os.path.join(FIGURES_DIR, filename)
+
         plt.savefig(filename, dpi=300, bbox_inches="tight")
         plt.show()
 
