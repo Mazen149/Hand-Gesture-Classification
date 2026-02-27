@@ -135,7 +135,7 @@ Runs dynamically sorted by the `test_f1_weighted` metric, highlighting XGBoost's
 ### 4. Hyperparameter Analysis
 A parallel coordinates plot visually analyzing hyperparameter combinations across the top 4 experiment runs.
 <br>
-<img src="image (1).png" width="800">
+![alt text](<image (1)-1.png>)
 
 ### 5. Model Registry
 The best performing models are registered via MLflow's Model Registry with explicit lifecycle stages (e.g. Production, Staging).
