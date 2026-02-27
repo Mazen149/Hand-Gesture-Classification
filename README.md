@@ -93,9 +93,8 @@ A core focus of this repository is ensuring all model training and validation ca
 ```text
 Hand-Gesture-Classification/
 ├── app/
-│   ├── inference.py              # Real-time webcam gesture classification
 │   ├── video_inference.py        # Video file processing for batch inference
-│   └── realtime_inference.py     # Alternative real-time inference implementation
+│   └── realtime_inference.py     # real-time inference implementationapplication script to run real-time webcam inference
 ├── data/                         # Dataset directory
 ├── figures/                      # Generated plots and confusion matrices
 ├── models/
@@ -110,7 +109,6 @@ Hand-Gesture-Classification/
 │   ├── preprocessing.py          # Transformations applied to landmark data
 │   ├── train.py                  # Training loops and cross-validation
 │   └── visualization.py          # Auxiliary visualization scripts
-├── testing_output_prediction.mp4 # Example output video from video inference
 ├── requirements.txt              # Python dependencies
 └── README.md                     # Project documentation
 ```
