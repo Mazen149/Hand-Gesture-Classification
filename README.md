@@ -111,7 +111,7 @@ The models within this repository were trained and evaluated on a custom-process
 *   **Total Observations:** 25,675 annotated samples.
 *   **Dimensionality:** 63 features per sample (consisting of 21 MediaPipe hand landmarks extracted across 3 structural axes).
 *   **Target Scope:** 18 distinct categorical hand gestures.
-*   **Recognized Gestures:** ![alt text](image-1.png)
+*   **Recognized Gestures:** <img width="1400" height="373" alt="Recognized Gestures" src="https://github.com/user-attachments/assets/e6cc5e47-fede-4f72-aa5e-24914973befd" />
 
 ## 📈 Experiment Tracking & Model Benchmarking
 
@@ -135,7 +135,7 @@ Runs dynamically sorted by the `test_f1_weighted` metric, highlighting XGBoost's
 ### 4. Hyperparameter Analysis
 A parallel coordinates plot visually analyzing hyperparameter combinations across the top 4 experiment runs.
 <br>
-![alt text](<image (1)-1.png>)
+<img width="1280" height="534" alt="Hyperparameter Analysis" src="https://github.com/user-attachments/assets/00e0ae20-9f1d-4420-920d-baa97f1bfa7f" />
 
 ### 5. Model Registry
 The best performing models are registered via MLflow's Model Registry with explicit lifecycle stages (e.g. Production, Staging).
@@ -151,7 +151,8 @@ The best performing models are registered via MLflow's Model Registry with expli
 ### 📊 Model Comparison
 Here is a comprehensive comparison of all the trained models ranking their performance across Training, Validation, and Test metrics.
 
-![alt text](image.png)
+<img width="1411" height="716" alt="Models Comparison" src="https://github.com/user-attachments/assets/3e21292a-636d-4e56-9fa5-27d4dc9d2e52" />
+
 
 ### 🏆 Final Algorithm Decision: XGBoost (Shallow Tree)
 After comprehensive evaluation of multiple algorithms, the **XGBoost (Shallow)** model was selected as our final production model. Based on the benchmarking matrix, it is ranked #1 for our specific use-case.
