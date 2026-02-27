@@ -9,7 +9,7 @@ A real-time Machine Learning application that detects and classifies hand gestur
 *   **XGBoost Classifier:** A trained shallow XGBoost tree model designed for quick inference.
 *   **MLflow Tracking:** Comprehensive experiment tracking, including model hyperparameters and evaluation metrics.
 *   **Experiment Benchmarking:** Extensive benchmarking of ML models within Jupyter Notebooks.
-*   **Video Recording:** The application can locally record the inference sessions for demonstrations.
+*   **Flexible Inference Modes:** Perform hand gesture inference either in real-time using your webcam or offline by providing a pre-recorded video file.
 
 ## 🧠 How it Works
 
@@ -49,16 +49,24 @@ The core modules used in this project are:
 
 ## 🚀 Usage
 
-### 1. Real-Time Inference (Running the App)
-To start the webcam application and launch the hand gesture classifier, run the inference script:
+### 1. Real-Time Inference (Webcam)
+To start the webcam application and launch the hand gesture classifier in real-time:
 ```sh
 python app/inference.py
 ```
-*   The script will prompt you: `Do you want to save the video? (y/n):`
-*   Select `y` if you want to generate an `output_recording.mp4` file of your session.
+*   The application displays a live feed with detected hand skeleton, predicted gesture, and confidence score.
 *   **Press `ESC`** to cleanly exit the camera feed.
 
-### 2. Viewing MLflow Experiments
+### 2. Video File Inference
+To process a pre-recorded video file and save the predictions:
+```sh
+python app/video_inference.py
+```
+*   The script will prompt you to enter the full path to your input video.
+*   The processed video with annotations will be saved as `<video_name>_prediction.mp4` in the project root.
+*   Useful for batch processing and creating demonstration videos.
+
+### 3. Viewing MLflow Experiments
 If you want to view the stored MLflow tracking configurations and metrics:
 ```sh
 mlflow ui
@@ -83,7 +91,8 @@ A core focus of this repository is ensuring all model training and validation ca
 ```text
 Hand-Gesture-Classification/
 ├── app/
-│   └── inference.py          # Main application script to run real-time webcam inference
+│   ├── video_inference.py        # Video file processing for batch inference
+│   └── realtime_inference.py     # real-time inference implementationapplication script to run real-time webcam inference
 ├── data/                     # Dataset directory
 ├── figures/                  # Generated plots and confusion matrices
 ├── mlflow screenshots/       # Visual evidence of MLflow tracking setup
@@ -102,7 +111,8 @@ Hand-Gesture-Classification/
 │   ├── preprocessing.py      # Transformations applied to landmark data
 │   ├── train.py              # Training loops and cross-validation
 │   └── visualization.py      # Auxiliary visualization scripts
-└── requirements.txt          # Python dependencies
+├── requirements.txt              # Python dependencies
+└── README.md                     # Project documentation
 ```
 
 ## ✨ Dataset Overview
