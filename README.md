@@ -8,7 +8,7 @@ A real-time Machine Learning application that detects and classifies hand gestur
 *   **MediaPipe Integration:** Efficient hand landmark detection that extracts key spatial features.
 *   **XGBoost Classifier:** A trained shallow XGBoost tree model designed for quick inference.
 *   **Experiment Benchmarking:** Extensive benchmarking of ML models within Jupyter Notebooks.
-*   **Video Recording:** The application can locally record the inference sessions for demonstrations.
+*   **Flexible Inference Modes:** Perform hand gesture inference either in real-time using your webcam or offline by providing a pre-recorded video file.
 
 ## 🧠 How it Works
 
