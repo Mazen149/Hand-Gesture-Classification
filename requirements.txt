@@ -4,5 +4,5 @@ matplotlib==3.10.8
 scikit-learn==1.8.0
 xgboost==3.2.0
 mediapipe==0.10.32
-opencv==4.13.0
+opencv-python==4.13.0.92
 joblib==1.5.3
