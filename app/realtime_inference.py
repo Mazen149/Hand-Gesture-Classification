@@ -88,7 +88,7 @@ while cap.isOpened():
 
     if results.hand_landmarks:
         hand_landmarks = results.hand_landmarks[0]
-        features = extract_landmarks(hand_landmarks)
+        features = extract_landmarks(hand_landmarks, w, h)
         features_norm = normalize_hand_xy_inference(features)
 
         pred_encoded = model.predict(features_norm)[0]

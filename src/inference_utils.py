@@ -49,14 +49,20 @@ def normalize_hand_xy_inference(
 
 def extract_landmarks(
     hand_landmarks: Sequence,
+    frame_width: int = 1,
+    frame_height: int = 1,
 ) -> np.ndarray:
     """
     Flatten 21 MediaPipe landmarks into a 63-dim vector.
+
+    MediaPipe returns normalised (0-1) coordinates; the training data
+    was stored in **pixel** coordinates, so we multiply x/y by the
+    frame dimensions to keep the feature scale consistent.
     """
     coords: list[float] = []
 
     for lm in hand_landmarks:
-        coords.extend([lm.x, lm.y, lm.z])
+        coords.extend([lm.x * frame_width, lm.y * frame_height, lm.z])
 
     return np.array(coords, dtype=np.float32)
 
