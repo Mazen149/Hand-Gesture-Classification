@@ -104,6 +104,7 @@ Hand-Gesture-Classification/
 ├── notebooks/
 │   └── data_preparation_and_model_benchmarking.ipynb  # Data exploration and model training pipeline
 ├── src/                          # Source code for utility scripts
+│   ├── config.py                 # Centralized configuration and constants
 │   ├── inference_utils.py        # Drawing utilities, progress bar, feature extraction
 │   ├── metrics.py                # Evaluation logic
 │   ├── preprocessing.py          # Transformations applied to landmark data

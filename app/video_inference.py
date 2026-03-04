@@ -17,17 +17,19 @@ from src.inference_utils import (
     draw_glass_panel,
     draw_progress_bar
 )
-
-# ------------- Config -----------------
-
-BASE_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
-
-MODEL_PATH = os.path.join(BASE_DIR, "models", "HandGesture_XGBoost_Shallow.joblib")
-ENCODER_PATH = os.path.join(BASE_DIR, "models", "label_encoder.joblib")
-TASK_MODEL_PATH = os.path.join(BASE_DIR, "models", "hand_landmarker.task")
-
-PREDICTION_WINDOW = 15
-CONFIDENCE_THRESHOLD = 0.5
+from src.config import (
+    MODEL_PATH,
+    ENCODER_PATH,
+    TASK_MODEL_PATH,
+    PREDICTION_WINDOW,
+    CONFIDENCE_THRESHOLD,
+    HAND_CONNECTIONS,
+    VIDEO_TARGET_WIDTH,
+    VIDEO_TARGET_HEIGHT,
+    VIDEO_DEFAULT_FPS,
+    VIDEO_CODEC,
+    BASE_DIR,
+)
 
 # ------------- Ask User For Video Path -----------------
 
@@ -62,14 +64,6 @@ options = HandLandmarkerOptions(
 
 landmarker = HandLandmarker.create_from_options(options)
 
-CONNECTIONS = [
-    (0,1),(1,2),(2,3),(3,4),
-    (0,5),(5,6),(6,7),(7,8),
-    (0,9),(9,10),(10,11),(11,12),
-    (0,13),(13,14),(14,15),(15,16),
-    (0,17),(17,18),(18,19),(19,20),
-]
-
 # ------------- Video Setup -----------------
 
 print("[INFO] Opening video...")
@@ -78,15 +72,12 @@ cap = cv2.VideoCapture(INPUT_VIDEO_PATH)
 if not cap.isOpened():
     raise RuntimeError("Could not open input video")
 
-TARGET_WIDTH = 1920
-TARGET_HEIGHT = 1080
-
 fps = cap.get(cv2.CAP_PROP_FPS)
 if fps == 0:
-    fps = 30
+    fps = VIDEO_DEFAULT_FPS
 
-fourcc = cv2.VideoWriter_fourcc(*"mp4v")
-out = cv2.VideoWriter(OUTPUT_VIDEO_PATH, fourcc, fps, (TARGET_WIDTH, TARGET_HEIGHT))
+fourcc = cv2.VideoWriter_fourcc(*VIDEO_CODEC)
+out = cv2.VideoWriter(OUTPUT_VIDEO_PATH, fourcc, fps, (VIDEO_TARGET_WIDTH, VIDEO_TARGET_HEIGHT))
 
 timestamp = 0
 confidence_value = 0.0
@@ -102,7 +93,7 @@ while cap.isOpened():
         break
 
     # Resize to Full HD
-    frame = cv2.resize(frame, (TARGET_WIDTH, TARGET_HEIGHT))
+    frame = cv2.resize(frame, (VIDEO_TARGET_WIDTH, VIDEO_TARGET_HEIGHT))
     h, w, _ = frame.shape
 
     rgb_frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
@@ -136,7 +127,7 @@ while cap.isOpened():
 
         pixel_coords = [(int(lm.x * w), int(lm.y * h)) for lm in hand_landmarks]
 
-        for connection in CONNECTIONS:
+        for connection in HAND_CONNECTIONS:
             cv2.line(frame, pixel_coords[connection[0]], pixel_coords[connection[1]], (0,255,255), 2)
         for coord in pixel_coords:
             cv2.circle(frame, coord, 4, (255,0,255), -1)

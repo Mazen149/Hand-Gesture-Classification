@@ -17,17 +17,16 @@ from src.inference_utils import (
     draw_glass_panel,
     draw_progress_bar
 )
-
-# ------------- Config -----------------
-
-BASE_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
-
-MODEL_PATH = os.path.join(BASE_DIR, "models", "HandGesture_XGBoost_Shallow.joblib")
-ENCODER_PATH = os.path.join(BASE_DIR, "models", "label_encoder.joblib")
-TASK_MODEL_PATH = os.path.join(BASE_DIR, "models", "hand_landmarker.task")
-
-PREDICTION_WINDOW = 15
-CONFIDENCE_THRESHOLD = 0.5
+from src.config import (
+    MODEL_PATH,
+    ENCODER_PATH,
+    TASK_MODEL_PATH,
+    PREDICTION_WINDOW,
+    CONFIDENCE_THRESHOLD,
+    HAND_CONNECTIONS,
+    CAMERA_FRAME_WIDTH,
+    CAMERA_FRAME_HEIGHT,
+)
 
 # ------------- Load Model + Encoder -----------------
 
@@ -52,14 +51,6 @@ options = HandLandmarkerOptions(
 
 landmarker = HandLandmarker.create_from_options(options)
 
-CONNECTIONS = [
-    (0,1),(1,2),(2,3),(3,4),
-    (0,5),(5,6),(6,7),(7,8),
-    (0,9),(9,10),(10,11),(11,12),
-    (0,13),(13,14),(14,15),(15,16),
-    (0,17),(17,18),(18,19),(19,20),
-]
-
 # ------------- Camera Setup -----------------
 
 print("[INFO] Starting camera...")
@@ -68,8 +59,8 @@ cap = cv2.VideoCapture(0)
 if not cap.isOpened():
     raise RuntimeError("Could not open webcam")
 
-cap.set(cv2.CAP_PROP_FRAME_WIDTH, 1280)
-cap.set(cv2.CAP_PROP_FRAME_HEIGHT, 720)
+cap.set(cv2.CAP_PROP_FRAME_WIDTH, CAMERA_FRAME_WIDTH)
+cap.set(cv2.CAP_PROP_FRAME_HEIGHT, CAMERA_FRAME_HEIGHT)
 
 timestamp = 0
 confidence_value = 0.0
@@ -116,7 +107,7 @@ while cap.isOpened():
 
         pixel_coords = [(int(lm.x * w), int(lm.y * h)) for lm in hand_landmarks]
 
-        for connection in CONNECTIONS:
+        for connection in HAND_CONNECTIONS:
             cv2.line(frame, pixel_coords[connection[0]], pixel_coords[connection[1]], (0,255,255), 2)
         for coord in pixel_coords:
             cv2.circle(frame, coord, 4, (255,0,255), -1)
