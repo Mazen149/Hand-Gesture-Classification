@@ -8,7 +8,7 @@ import mediapipe as mp
 from collections import deque
 from typing import Deque
 
-sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
+sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), ".." , "..")))
 
 from src.inference_utils import (
     normalize_hand_xy_inference,

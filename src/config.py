@@ -6,6 +6,9 @@ import joblib
 # This ensures paths work correctly regardless of where the script is run.
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
+# Output directory for processed videos (inside project root, accessible via Docker volume)
+OUTPUT_DIR = os.path.join(BASE_DIR, "output", "videos")
+os.makedirs(OUTPUT_DIR, exist_ok=True)
 
 # --------------------------- Model & Encoder Files --------------------------
 # Paths to trained ML artifacts used during inference.

@@ -5,14 +5,16 @@ A real-time Machine Learning application that detects and classifies hand gestur
 ## 🌟 Features
 
 *   **Real-Time Inference:** Fast, live webcam classification with a custom Heads-Up Display (HUD) showing the predicted gesture and confidence scores.
+*   **Streamlit Web UI:** An interactive browser-based dashboard with realtime webcam streaming (via WebRTC) and drag-and-drop video upload for batch processing.
 *   **MediaPipe Integration:** Efficient hand landmark detection that extracts key spatial features.
 *   **XGBoost Classifier:** A trained shallow XGBoost tree model designed for quick inference.
 *   **Experiment Benchmarking:** Extensive benchmarking of ML models within Jupyter Notebooks.
 *   **Flexible Inference Modes:** Perform hand gesture inference either in real-time using your webcam or offline by providing a pre-recorded video file.
+*   **Configurable Parameters:** Adjust confidence threshold and prediction stabilisation window on the fly through the Streamlit sidebar.
 
 ## 🧠 How it Works
 
-1. **Landmark Extraction:** By loading the `hand_landmarker.task` module provided by MediaPipe, `app/inference.py` pulls $X$ and $Y$ coordinates for 21 hand landmarks.
+1. **Landmark Extraction:** By loading the `hand_landmarker.task` module provided by MediaPipe, the inference pipeline pulls $X$ and $Y$ coordinates for 21 hand landmarks.
 2. **Normalization:** The `normalize_hand_xy_inference` function takes pixel coordinates and normalizes them so the model performs consistently regardless of the hand's location in the frame.
 3. **Classification:** The generated 1D feature array is fed into a loaded `XGBoost` model via joblib, producing categorical predictions.
 4. **Stabilization:** A prediction queue (length=15) stabilizes predictions by taking the most frequent classification, reducing frame-to-frame flickering.
@@ -21,10 +23,13 @@ A real-time Machine Learning application that detects and classifies hand gestur
 
 The core modules used in this project are:
 *   `mediapipe==0.10.32`
-*   `opencv-python` / `opencv==4.13.0`
+*   `opencv-python==4.13.0.92`
 *   `xgboost==3.2.0`
 *   `scikit-learn==1.8.0`
-*   `pandas`, `numpy`, `matplotlib`
+*   `streamlit==1.55.0`
+*   `streamlit-webrtc==0.64.5`
+*   `av==16.1.0`
+*   `pandas`, `numpy`, `matplotlib`, `joblib`
 
 ## 🛠️ Installation
 
@@ -47,21 +52,30 @@ The core modules used in this project are:
 
 ## 🚀 Usage
 
-### 1. Real-Time Inference (Webcam)
+### 1. Streamlit Web App (Recommended)
+Launch the interactive browser-based dashboard:
+```sh
+streamlit run app/streamlit/streamlit_app.py
+```
+*   **Realtime Webcam** – streams your webcam feed via WebRTC with live gesture overlays.
+*   **Upload Video** – drag-and-drop a video file for batch processing, then preview and download the annotated result.
+*   Adjust **Confidence Threshold** and **Stabilisation Window** from the sidebar.
+
+### 2. CLI – Real-Time Inference (Webcam)
 To start the webcam application and launch the hand gesture classifier in real-time:
 ```sh
-python app/inference.py
+python app/cli/realtime_inference.py
 ```
 *   The application displays a live feed with detected hand skeleton, predicted gesture, and confidence score.
 *   **Press `ESC`** to cleanly exit the camera feed.
 
-### 2. Video File Inference
+### 3. CLI – Video File Inference
 To process a pre-recorded video file and save the predictions:
 ```sh
-python app/video_inference.py
+python app/cli/video_inference.py
 ```
 *   The script will prompt you to enter the full path to your input video.
-*   The processed video with annotations will be saved as `<video_name>_prediction.mp4` in the project root.
+*   The processed video with annotations will be saved as `<video_name>_prediction.mp4` in the `output/videos/` directory.
 *   Useful for batch processing and creating demonstration videos.
 
 
@@ -93,25 +107,34 @@ A core focus of this repository is ensuring all model training and validation ca
 ```text
 Hand-Gesture-Classification/
 ├── app/
-│   ├── video_inference.py        # Video file processing for batch inference
-│   └── realtime_inference.py     # real-time inference implementationapplication script to run real-time webcam inference
-├── data/                         # Dataset directory
-├── figures/                      # Generated plots and confusion matrices
+│   ├── cli/
+│   │   ├── realtime_inference.py      # CLI real-time webcam inference
+│   │   └── video_inference.py         # CLI video file batch inference
+│   └── streamlit/
+│       ├── streamlit_app.py           # Streamlit entry point
+│       ├── pages.py                   # Realtime & video upload pages
+│       ├── model_utils.py             # Cached model/encoder loading
+│       ├── video_utils.py             # Frame annotation & video processing
+│       └── ui_utils.py               # CSS injection & display constants
+├── data/                              # Dataset directory
+├── figures/                           # Generated plots and confusion matrices
 ├── models/
-│   ├── hand_landmarker.task      # MediaPipe pre-trained model for hand tracking
-│   ├── HandGesture_XGBoost_Shallow.joblib # Trained XGBoost model
-│   └── label_encoder.joblib      # Scikit-learn LabelEncoder
+│   ├── hand_landmarker.task           # MediaPipe pre-trained model for hand tracking
+│   ├── HandGesture_XGBoost_Shallow.joblib  # Trained XGBoost model
+│   └── label_encoder.joblib           # Scikit-learn LabelEncoder
 ├── notebooks/
-│   └── data_preparation_and_model_benchmarking.ipynb  # Data exploration and model training pipeline
-├── src/                          # Source code for utility scripts
-│   ├── config.py                 # Centralized configuration and constants
-│   ├── inference_utils.py        # Drawing utilities, progress bar, feature extraction
-│   ├── metrics.py                # Evaluation logic
-│   ├── preprocessing.py          # Transformations applied to landmark data
-│   ├── train.py                  # Training loops and cross-validation
-│   └── visualization.py          # Auxiliary visualization scripts
-├── requirements.txt              # Python dependencies
-└── README.md                     # Project documentation
+│   └── data_preparation_and_model_benchmarking.ipynb  # Data exploration & model training
+├── output/
+│   └── videos/                        # Processed video output directory
+├── src/                               # Source code for utility modules
+│   ├── config.py                      # Centralized configuration and constants
+│   ├── inference_utils.py             # Drawing utilities, progress bar, feature extraction
+│   ├── metrics.py                     # Evaluation logic
+│   ├── preprocessing.py              # Transformations applied to landmark data
+│   ├── train.py                       # Training loops and cross-validation
+│   └── visualization.py              # Auxiliary visualization scripts
+├── requirements.txt                   # Python dependencies
+└── README.md                          # Project documentation
 ```
 
 ## ✨ Dataset Overview
