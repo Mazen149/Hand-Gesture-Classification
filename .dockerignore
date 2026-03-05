@@ -1,0 +1,40 @@
+# .dockerignore
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.db
+*.sqlite3
+.ipynb_checkpoints
+.env
+*.log
+build/
+dist/
+.eggs/
+*.egg-info/
+*.egg
+*.manifest
+*.spec
+instance/
+.webassets-cache
+.scrapy
+docs/_build/
+.pybuilder/
+target/
+*.csv
+*.joblib
+*.task
+
+# ── Docker / Git / IDE ──
+.git/
+.gitignore
+.dockerignore
+Dockerfile
+docker-compose.yml
+
+# ── Files not needed at runtime ──
+notebooks/
+figures/
+README.md
+*.ipynb
+*.md

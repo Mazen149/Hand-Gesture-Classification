@@ -22,14 +22,17 @@ A real-time Machine Learning application that detects and classifies hand gestur
 ## 📦 Dependencies
 
 The core modules used in this project are:
+*   `numpy==2.4.2`
+*   `pandas==2.3.3`
+*   `matplotlib==3.10.8`
+*   `scikit-learn==1.8.0`
+*   `xgboost==3.2.0`
 *   `mediapipe==0.10.32`
 *   `opencv-python==4.13.0.92`
-*   `xgboost==3.2.0`
-*   `scikit-learn==1.8.0`
+*   `joblib==1.5.3`
 *   `streamlit==1.55.0`
 *   `streamlit-webrtc==0.64.5`
 *   `av==16.1.0`
-*   `pandas`, `numpy`, `matplotlib`, `joblib`
 
 ## 🛠️ Installation
 
@@ -61,7 +64,19 @@ streamlit run app/streamlit/streamlit_app.py
 *   **Upload Video** – drag-and-drop a video file for batch processing, then preview and download the annotated result.
 *   Adjust **Confidence Threshold** and **Stabilisation Window** from the sidebar.
 
-### 2. CLI – Real-Time Inference (Webcam)
+### 2. Docker Deployment
+Run the Streamlit app inside a container using Docker Compose:
+```sh
+docker compose up --build
+```
+
+Alternatively, you can run the already published image directly from Docker Hub:
+```sh
+docker run mazen1393/hand-gesture-streamlit:1.0
+```
+The app will be available at `http://localhost:8501`. The multi-stage Dockerfile uses `python:3.14.3-slim`, swaps in `opencv-python-headless` to reduce image size, and includes `ffmpeg` for H.264 video re-encoding.
+
+### 3. CLI – Real-Time Inference (Webcam)
 To start the webcam application and launch the hand gesture classifier in real-time:
 ```sh
 python app/cli/realtime_inference.py
@@ -69,7 +84,7 @@ python app/cli/realtime_inference.py
 *   The application displays a live feed with detected hand skeleton, predicted gesture, and confidence score.
 *   **Press `ESC`** to cleanly exit the camera feed.
 
-### 3. CLI – Video File Inference
+### 4. CLI – Video File Inference
 To process a pre-recorded video file and save the predictions:
 ```sh
 python app/cli/video_inference.py
@@ -99,8 +114,8 @@ A core focus of this repository is ensuring all model training and validation ca
    jupyter notebook notebooks/data_preparation_and_model_benchmarking.ipynb
    ```
 2. **Deterministic Modeling:** Random states are seeded internally to ensure that all generated models (Logistic Regression, SVM, KNN, Random Forest, XGBoost) yield the exact same metrics and splits when instantiated.
-3. **Hyperparameter Provenance:** All historical experiments are tracked so researchers can inspect the `mlruns/` directory to fetch the exact hyperparameters, scalers, and label encoders used for our finalized XGBoost model. 
-4. **End-to-End Pipeline Validation:** The `.ipynb` encompasses fetching data, scaling/normalizing landmarks, conducting grid-search cross-validation, and logging the metrics iteratively.
+3. **Hyperparameter Provenance:** Every experiment configuration is preserved inside the benchmarking notebook, so researchers can inspect the exact hyperparameter grids, scalers, and label encoders used for the finalized XGBoost model.
+4. **End-to-End Pipeline Validation:** The notebook encompasses loading data, scaling/normalizing landmarks, running parameter-grid evaluations across five model families, and comparing metrics via a leaderboard table.
 
 ## 📂 Project Structure
 
@@ -115,7 +130,7 @@ Hand-Gesture-Classification/
 │       ├── pages.py                   # Realtime & video upload pages
 │       ├── model_utils.py             # Cached model/encoder loading
 │       ├── video_utils.py             # Frame annotation & video processing
-│       └── ui_utils.py               # CSS injection & display constants
+│       └── ui_utils.py                # CSS injection & display constants
 ├── data/                              # Dataset directory
 ├── figures/                           # Generated plots and confusion matrices
 ├── models/
@@ -130,9 +145,12 @@ Hand-Gesture-Classification/
 │   ├── config.py                      # Centralized configuration and constants
 │   ├── inference_utils.py             # Drawing utilities, progress bar, feature extraction
 │   ├── metrics.py                     # Evaluation logic
-│   ├── preprocessing.py              # Transformations applied to landmark data
-│   ├── train.py                       # Training loops and cross-validation
-│   └── visualization.py              # Auxiliary visualization scripts
+│   ├── preprocessing.py               # Transformations applied to landmark data
+│   ├── train.py                       # Training loops and parameter-grid evaluation
+│   └── visualization.py               # Auxiliary visualization scripts
+├── Dockerfile                         # Multi-stage Docker build (Python 3.14.3-slim)
+├── docker-compose.yml                 # One-command container deployment
+├── .dockerignore                      # Files excluded from Docker build context
 ├── requirements.txt                   # Python dependencies
 └── README.md                          # Project documentation
 ```
