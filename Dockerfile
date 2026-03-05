@@ -1,7 +1,7 @@
 # ── Stage 1: Builder ────────────────────────────────────────────
 # Install Python packages in an isolated prefix so only the final
 # artefacts are copied to the runtime image (no build caches/cruft).
-FROM python:3.14.3-slim AS builder
+FROM python:3.10-slim AS builder
 
 WORKDIR /build
 
@@ -18,7 +18,7 @@ RUN sed \
 
 
 # ── Stage 2: Runtime ───────────────────────────────────────────
-FROM python:3.14.3-slim
+FROM python:3.10-slim
 
 WORKDIR /app
 

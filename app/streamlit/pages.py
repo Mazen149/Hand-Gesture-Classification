@@ -7,16 +7,20 @@ from collections import deque
 from pathlib import Path
 
 # ── Monkey-patch for streamlit-webrtc on Python 3.14+ ──────────────
-# Version 0.64.5 crashes when _polling_thread is None (fixed on GitHub
-# main but not yet released).  Guard the stop() method so it handles None.
+# Version 0.64.5 calls Thread.is_alive() after join(), which raises
+# RuntimeError on Python 3.13+ for threads in certain states.
+# We replace stop() entirely with a corrected version that keeps all
+# real cleanup (signal → join → clear) but drops the broken is_alive() check.
+import threading as _threading
 import streamlit_webrtc.shutdown as _sw
-
-_orig_stop = _sw.SessionShutdownObserver.stop
 
 def _patched_stop(self, timeout: float = 1.0):
     if self._polling_thread is None:
         return
-    _orig_stop(self, timeout)
+    self._polling_thread_stop_event.set()
+    if _threading.current_thread() is not self._polling_thread:
+        self._polling_thread.join(timeout=timeout)
+    self._polling_thread = None
 
 _sw.SessionShutdownObserver.stop = _patched_stop
 # ────────────────────────────────────────────────────────────────────
@@ -225,17 +229,21 @@ def page_video(model, encoder, conf_threshold, pred_window):
             st.video(input_path)
 
     with col_action:
-        if st.button("🚀 Start Inference", type="primary", use_container_width=True):
-            _process_video(
-                input_path,
-                output_path,
-                model,
-                encoder,
-                conf_threshold,
-                pred_window,
-            )
-            st.session_state["video_output_path"] = output_path
-            st.session_state["video_output_name"] = Path(output_path).name
+        run_inference = st.button("🚀 Start Inference", type="primary", use_container_width=True)
+
+    # Run processing outside the narrow column so progress UI renders at full width
+    if run_inference:
+        _process_video(
+            input_path,
+            output_path,
+            model,
+            encoder,
+            conf_threshold,
+            pred_window,
+        )
+        st.session_state["video_output_path"] = output_path
+        st.session_state["video_output_name"] = Path(output_path).name
+        st.rerun()
 
     output_path_state = st.session_state.get("video_output_path")
     output_name_state = st.session_state.get("video_output_name", "prediction.mp4")

@@ -16,34 +16,67 @@ def _reencode_to_h264(video_path: str) -> None:
     """Re-encode a video to H.264 (libx264) so browsers can play it.
 
     OpenCV's VideoWriter on Linux often falls back to mp4v which
-    browsers cannot decode.  If ffmpeg is available we re-encode
-    in-place; otherwise we silently skip (the user can still download).
+    browsers cannot decode.  Tries system ffmpeg first, then falls
+    back to PyAV (which ships its own FFmpeg libraries).
     """
     if not os.path.exists(video_path):
         return
-    if not shutil.which("ffmpeg"):
-        return  # ffmpeg not installed – skip silently
 
     tmp_path = video_path + ".tmp.mp4"
+
+    # ── Try system ffmpeg first (fastest) ──
+    if shutil.which("ffmpeg"):
+        try:
+            subprocess.run(
+                [
+                    "ffmpeg", "-y",
+                    "-i", video_path,
+                    "-c:v", "libx264",
+                    "-preset", "fast",
+                    "-crf", "23",
+                    "-movflags", "+faststart",
+                    "-an",              # no audio track needed
+                    tmp_path,
+                ],
+                check=True,
+                stdout=subprocess.DEVNULL,
+                stderr=subprocess.DEVNULL,
+            )
+            os.replace(tmp_path, video_path)   # atomic swap
+            return
+        except (subprocess.CalledProcessError, OSError):
+            if os.path.exists(tmp_path):
+                os.remove(tmp_path)
+
+    # ── Fallback: PyAV (ships its own FFmpeg libs) ──
     try:
-        subprocess.run(
-            [
-                "ffmpeg", "-y",
-                "-i", video_path,
-                "-c:v", "libx264",
-                "-preset", "fast",
-                "-crf", "23",
-                "-movflags", "+faststart",
-                "-an",              # no audio track needed
-                tmp_path,
-            ],
-            check=True,
-            stdout=subprocess.DEVNULL,
-            stderr=subprocess.DEVNULL,
-        )
-        os.replace(tmp_path, video_path)   # atomic swap
-    except (subprocess.CalledProcessError, OSError):
-        # If re-encoding fails, keep the original file
+        import av as _av
+
+        inp = _av.open(video_path)
+        in_stream = inp.streams.video[0]
+
+        fps = in_stream.average_rate
+        if fps is None or float(fps) == 0:
+            fps = 30
+
+        out = _av.open(tmp_path, mode="w")
+        out_stream = out.add_stream("libx264", rate=fps)
+        out_stream.width = in_stream.width
+        out_stream.height = in_stream.height
+        out_stream.pix_fmt = "yuv420p"
+        out_stream.options = {"preset": "fast", "crf": "23"}
+
+        for frame in inp.decode(in_stream):
+            for packet in out_stream.encode(frame):
+                out.mux(packet)
+
+        for packet in out_stream.encode():
+            out.mux(packet)
+
+        out.close()
+        inp.close()
+        os.replace(tmp_path, video_path)
+    except Exception:
         if os.path.exists(tmp_path):
             os.remove(tmp_path)
 

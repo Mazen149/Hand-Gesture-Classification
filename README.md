@@ -22,10 +22,10 @@ A real-time Machine Learning application that detects and classifies hand gestur
 ## 📦 Dependencies
 
 The core modules used in this project are:
-*   `numpy==2.4.2`
+*   `numpy==2.2.6`
 *   `pandas==2.3.3`
 *   `matplotlib==3.10.8`
-*   `scikit-learn==1.8.0`
+*   `scikit-learn==1.7.2`
 *   `xgboost==3.2.0`
 *   `mediapipe==0.10.32`
 *   `opencv-python==4.13.0.92`
@@ -74,7 +74,7 @@ Alternatively, you can run the already published image directly from Docker Hub:
 ```sh
 docker run mazen1393/hand-gesture-streamlit:1.0
 ```
-The app will be available at `http://localhost:8501`. The multi-stage Dockerfile uses `python:3.14.3-slim`, swaps in `opencv-python-headless` to reduce image size, and includes `ffmpeg` for H.264 video re-encoding.
+The app will be available at `http://localhost:8501`. The multi-stage Dockerfile uses `python:3.10-slim`, swaps in `opencv-python-headless` to reduce image size, and includes `ffmpeg` for H.264 video re-encoding.
 
 ### 3. CLI – Real-Time Inference (Webcam)
 To start the webcam application and launch the hand gesture classifier in real-time:
@@ -148,7 +148,7 @@ Hand-Gesture-Classification/
 │   ├── preprocessing.py               # Transformations applied to landmark data
 │   ├── train.py                       # Training loops and parameter-grid evaluation
 │   └── visualization.py               # Auxiliary visualization scripts
-├── Dockerfile                         # Multi-stage Docker build (Python 3.14.3-slim)
+├── Dockerfile                         # Multi-stage Docker build (Python 3.10-slim)
 ├── docker-compose.yml                 # One-command container deployment
 ├── .dockerignore                      # Files excluded from Docker build context
 ├── requirements.txt                   # Python dependencies
