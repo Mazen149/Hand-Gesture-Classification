@@ -1,5 +1,14 @@
 # Hand Gesture Classification 🖐️🤖
 
+![Python](https://img.shields.io/badge/Python-3.10-3776AB?logo=python&logoColor=white)
+![License](https://img.shields.io/badge/License-MIT-green.svg)
+![Streamlit](https://img.shields.io/badge/Streamlit-1.55.0-FF4B4B?logo=streamlit&logoColor=white)
+![XGBoost](https://img.shields.io/badge/XGBoost-3.2.0-189FDD?logo=xgboost&logoColor=white)
+![MediaPipe](https://img.shields.io/badge/MediaPipe-0.10.32-00A98F)
+![OpenCV](https://img.shields.io/badge/OpenCV-4.13.0-5C3EE8?logo=opencv&logoColor=white)
+![Docker](https://img.shields.io/badge/Docker-Ready-2496ED?logo=docker&logoColor=white)
+![Streamlit Cloud](https://img.shields.io/badge/Deployed-Streamlit%20Cloud-FF4B4B?logo=streamlit&logoColor=white)
+
 A real-time Machine Learning application that detects and classifies hand gestures using a webcam. The project utilizes Google's **MediaPipe** for robust hand tracking and landmark extraction, and an **XGBoost Classifier** for high-accuracy, low-latency prediction.
 
 ## 🌟 Features
