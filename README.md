@@ -55,28 +55,43 @@ The core modules used in this project are:
 
 ## 🚀 Usage
 
-### 1. Streamlit Web App (Recommended)
-Launch the interactive browser-based dashboard:
-```sh
-streamlit run app/streamlit/streamlit_app.py
-```
+
+### 1. Streamlit Cloud (Recommended)
+
+The app is deployed on **Streamlit Cloud** and can be accessed directly without any installation:
+
+👉 **[Live Demo – Hand Gesture Classification](https://hand-gesture-classification-webapp.streamlit.app/)**
+
 *   **Realtime Webcam** – streams your webcam feed via WebRTC with live gesture overlays.
 *   **Upload Video** – drag-and-drop a video file for batch processing, then preview and download the annotated result.
 *   Adjust **Confidence Threshold** and **Stabilisation Window** from the sidebar.
 
-### 2. Docker Deployment
-Run the Streamlit app inside a container using Docker Compose:
+### 2. Streamlit Web App (Local)
+To run the Streamlit web app on your local machine:
+```sh
+streamlit run app/streamlit/streamlit_app.py
+```
+
+### 3. Docker
+
+You can run the already published image directly from Docker Hub:
+```sh
+docker run mazen1393/hand-gesture-streamlit:1.0
+```
+
+
+Or build and run the Streamlit app inside a container using Docker Compose (make sure to run this command in the directory containing your `docker-compose.yml` file):
 ```sh
 docker compose up --build
 ```
 
-Alternatively, you can run the already published image directly from Docker Hub:
-```sh
-docker run mazen1393/hand-gesture-streamlit:1.0
-```
 The app will be available at `http://localhost:8501`. The multi-stage Dockerfile uses `python:3.10-slim`, swaps in `opencv-python-headless` to reduce image size, and includes `ffmpeg` for H.264 video re-encoding.
 
-### 3. CLI – Real-Time Inference (Webcam)
+
+
+### 4. Command Line Interface (CLI)
+
+#### a) Real-Time Inference (Webcam)
 To start the webcam application and launch the hand gesture classifier in real-time:
 ```sh
 python app/cli/realtime_inference.py
@@ -84,7 +99,7 @@ python app/cli/realtime_inference.py
 *   The application displays a live feed with detected hand skeleton, predicted gesture, and confidence score.
 *   **Press `ESC`** to cleanly exit the camera feed.
 
-### 4. CLI – Video File Inference
+#### b) Video File Inference
 To process a pre-recorded video file and save the predictions:
 ```sh
 python app/cli/video_inference.py
