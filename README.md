@@ -1,4 +1,4 @@
-# Hand Gesture Classification 🖐️🤖
+# End-to-End Hand Gesture Classification 🖐️🤖
 
 > **An End-to-End Machine Learning Project** — from raw data exploration and feature engineering, through model training and experiment tracking, to a fully **Dockerized** and **deployed** production application.
 
@@ -23,7 +23,7 @@ A real-time Machine Learning application that detects and classifies **18 hand g
 |                                  |                                                                                                                                                      |
 | -------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------- |
 | 🏗️ **End-to-End Pipeline**        | Data exploration → Preprocessing → Training → Evaluation → MLflow Tracking → Deployment                                                              |
-| 🐳 **Dockerized**                 | Multi-stage Docker build published on [my Docker Hub repository](https://hub.docker.com/repository/docker/mazen1393/hand-gesture-streamlit/general), |
+| 🐳 **Dockerized**                 | Multi-stage Docker build published on [my Docker Hub repository](https://hub.docker.com/repository/docker/mazen1393/hand-gesture-streamlit/general) |
 | ☁️ **Deployed**                   | Live on [Streamlit Cloud](https://hand-gesture-classification-webapp.streamlit.app/) — zero setup required                                           |
 | 📊 **MLflow Experiment Tracking** | 14 runs across 5 model families, with parameters, metrics, artifacts, and model registration                                                         |
 | 🎯 **98.17% Test F1**             | XGBoost Shallow model selected for production after rigorous benchmarking                                                                            |
