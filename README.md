@@ -116,7 +116,7 @@ Below is a demonstration of the model in action, showing real-time hand gesture 
 
 
 
-https://github.com/user-attachments/assets/c2fde907-a55b-4b3e-beda-2f5799564ad8
+https://github.com/user-attachments/assets/e9928064-89bb-435e-b062-3bb6ba8bd3f6
 
 
 
