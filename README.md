@@ -76,7 +76,7 @@ streamlit run app/streamlit/streamlit_app.py
 
 You can run the already published image directly from Docker Hub:
 ```sh
-docker run mazen1393/hand-gesture-streamlit:1.0
+docker run -p 8501:8501 mazen1393/hand-gesture-streamlit:1.0
 ```
 
 
