@@ -1,0 +1,14 @@
+artifact_uri: file:d:\ITI\ITI Courses\11) ML 1\project\Project Github\mlruns/674777156671593041/780d98fb2f0b48ffbdc0e815175a4934/artifacts
+end_time: 1772795667141
+entry_point_name: ''
+experiment_id: '674777156671593041'
+lifecycle_stage: active
+run_id: 780d98fb2f0b48ffbdc0e815175a4934
+run_name: SVM_C1.0_kernlinear
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1772795663023
+status: 3
+tags: []
+user_id: mazen

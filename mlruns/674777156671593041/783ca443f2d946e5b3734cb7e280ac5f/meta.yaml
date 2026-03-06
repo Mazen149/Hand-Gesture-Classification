@@ -1,0 +1,14 @@
+artifact_uri: file:d:\ITI\ITI Courses\11) ML 1\project\Project Github\mlruns/674777156671593041/783ca443f2d946e5b3734cb7e280ac5f/artifacts
+end_time: 1772795694676
+entry_point_name: ''
+experiment_id: '674777156671593041'
+lifecycle_stage: active
+run_id: 783ca443f2d946e5b3734cb7e280ac5f
+run_name: KNN_n_ne7_metrminkowski_weigdistance
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1772795691420
+status: 3
+tags: []
+user_id: mazen

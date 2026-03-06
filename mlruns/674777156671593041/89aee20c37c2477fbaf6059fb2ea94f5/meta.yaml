@@ -1,0 +1,14 @@
+artifact_uri: file:d:\ITI\ITI Courses\11) ML 1\project\Project Github\mlruns/674777156671593041/89aee20c37c2477fbaf6059fb2ea94f5/artifacts
+end_time: 1772795501712
+entry_point_name: ''
+experiment_id: '674777156671593041'
+lifecycle_stage: active
+run_id: 89aee20c37c2477fbaf6059fb2ea94f5
+run_name: XGBoost_n_es200_max_6_lear0.1_cols0.8_n_jo-1_num_18_objemulti:softmax_subs0.8_treehist
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1772795496678
+status: 3
+tags: []
+user_id: mazen
